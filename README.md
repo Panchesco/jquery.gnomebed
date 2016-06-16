@@ -21,14 +21,12 @@ A jQuery plugin for rendering embedded media via the Noembed gateway.
 
 #####Examples
 
-Extract URL from text wrapped in a selector.
+Extract URL from text wrapped in a selector:
 
 ```
 <div class="video">
 	<div class="video-wrapper">https://vimeo.com/92473148</a></div>
 </div>
-
-
 
 <script type="text/javascript" src="js/jquery.gnomebed.min.js"></script>
 <script>
@@ -38,7 +36,7 @@ Extract URL from text wrapped in a selector.
 </script>
 ```
 
-Use an attribute to pass the URL.
+Use a tag attribute to pass the URL:
 
 ```
 <div class="video">
@@ -46,8 +44,6 @@ Use an attribute to pass the URL.
 	<a href="https://www.youtube.com/watch?v=W9Sk01P232s">https://www.youtube.com/watch?v=W9Sk01P232s</a>
 	</div>
 </div>
-
-
 
 <script type="text/javascript" src="js/jquery.gnomebed.min.js"></script>
 <script>

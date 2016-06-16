@@ -1,11 +1,10 @@
 /*
 
-Author:		Richard Whitmer
-URL:			https://github.com/panchesco	
-Name:		Gnomebed	
-Ddescription	jQuery plugin for rendering embedded media via the Noembed gateway.
-Version		1.0.0
-
+Author:         Richard Whitmer
+URL:            https://github.com/panchesco	
+Name:           Gnomebed	
+Description:    jQuery plugin for rendering embedded media via the Noembed gateway.
+Version:        1.0.0
 
 The MIT License (MIT)
 
