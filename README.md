@@ -1,2 +1,60 @@
-# jquery.gnomebed
+# Gnomebed
 A jQuery plugin for rendering embedded media via the Noembed gateway.
+
+##Installation & Usage
+
+1. Download and unzip the package into your js directory.
+2. Link to js/jquery.gnomebed.min.js
+3. Call the plugin by attaching it to a selector. The plugin uses the URL in the selector or html tag attribute as to fetch an embedded player via the [Noembed](http://noembed.com) gateway.
+ 
+
+####Options
+
+| Option | Description | Default | Options
+| --- | --- | --- | --- |
+| mode | Append, prepend, or replace selector with player? | replace | append, prepend, replace
+| attr | Look for the URL in text or a tag attribute? | text | text, any attribute such as href, data-url, etc.
+| nowrap | Remove Noembed footer? | on | on, off
+| maxwidth | maximum width of returned player | 800 | any integer
+| maxheight | maximum height of returned player | 450 | any integer
+
+
+#####Examples
+
+Extract url from text wrapped in a selector.
+
+```
+<div class="video">
+	<div class="video-wrapper">https://vimeo.com/92473148</a></div>
+</div>
+
+
+
+<script type="text/javascript" src="js/jquery.gnomebed.min.js"></script>
+<script>
+	(function($){
+		$('.video-wrapper').gnomebed();
+	})(jQuery)
+</script>
+```
+
+Use an attribute to pass the URL.
+
+```
+<div class="video">
+	<div class="video-wrapper">
+	<a href="https://www.youtube.com/watch?v=W9Sk01P232s">https://www.youtube.com/watch?v=W9Sk01P232s</a>
+	</div>
+</div>
+
+
+
+<script type="text/javascript" src="js/jquery.gnomebed.min.js"></script>
+<script>
+	(function($){
+		$('.video-wrapper a').gnomebed({attr:'href'});
+	})(jQuery)
+</script>
+```
+
+
