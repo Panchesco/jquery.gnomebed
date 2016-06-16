@@ -5,7 +5,7 @@ A jQuery plugin for rendering embedded media via the Noembed gateway.
 
 1. Download and unzip the package into your js directory.
 2. Link to js/jquery.gnomebed.min.js
-3. Call the plugin by attaching it to a selector. The plugin uses the URL in the selector or html tag attribute as to fetch an embedded player via the [Noembed](http://noembed.com) gateway.
+3. Call the plugin by attaching it to a selector. The plugin uses the URL in the selector or html tag attribute to fetch an embedded player via the Noembed gateway.
  
 
 ####Options
@@ -13,7 +13,7 @@ A jQuery plugin for rendering embedded media via the Noembed gateway.
 | Option | Description | Default | Options
 | --- | --- | --- | --- |
 | mode | Append, prepend, or replace selector with player? | replace | append, prepend, replace
-| attr | Look for the URL in text or a tag attribute? | text | text, any attribute such as href, data-url, etc.
+| attr | Look for the URL in a tag attribute or wrapped text? | text | text, any attribute such as href, data-url, etc.
 | nowrap | Remove Noembed footer? | on | on, off
 | maxwidth | maximum width of returned player | 800 | any integer
 | maxheight | maximum height of returned player | 450 | any integer
@@ -21,7 +21,7 @@ A jQuery plugin for rendering embedded media via the Noembed gateway.
 
 #####Examples
 
-Extract url from text wrapped in a selector.
+Extract URL from text wrapped in a selector.
 
 ```
 <div class="video">
@@ -57,4 +57,6 @@ Use an attribute to pass the URL.
 </script>
 ```
 
+####Notes
 
+So far, I've only tested YouTube, Vimeo, and SoundCloud URLs with this repo. Limits to the maxwidth and maxheight options will vary by provider. See [Noembed](http://noembed.com) for providers the Noembed project currently supports.
