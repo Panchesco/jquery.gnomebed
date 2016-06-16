@@ -59,4 +59,4 @@ Use an attribute to pass the URL.
 
 ####Notes
 
-So far, I've only tested YouTube, Vimeo, and SoundCloud URLs with this repo. Limits to the maxwidth and maxheight options will vary by provider. See [Noembed](http://noembed.com) for providers the Noembed project currently supports.
+So far, I've only tested YouTube, Vimeo, and SoundCloud URLs with this repo. Limits to the maxwidth and maxheight options will vary by provider. See [noembed.com](http://noembed.com) for providers the Noembed project currently supports.
