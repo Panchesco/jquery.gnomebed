@@ -4,7 +4,7 @@ Author:         Richard Whitmer
 URL:            https://github.com/panchesco	
 Name:           Gnomebed	
 Description:    jQuery plugin for rendering embedded media via the Noembed gateway.
-Version:        1.0.0
+Version:        1.1.0
 
 The MIT License (MIT)
 
@@ -33,17 +33,30 @@ SOFTWARE.
 	(function(jQuery){
 
 		$.fn.gnomebed = function(options) {
-
-		  var settings = $.extend({
+		
+			var settings = $.extend({
 
 		    // These are the default settings.
 		    mode: 'replace',
 		    attr: 'text',
 		    nowrap: 'on',
 		    maxwidth: 800,
-		    maxheight: 450
+		    maxheight: 450,
+		    youtube: {	showinfo: 1,
+			    		controls: 1,
+			    		rel: 1,
+			    		autoplay: 0,
+		    },
+		    youtubeOpts: ['showinfo',
+		    				'controls',
+		    				'rel',
+		    				'autoplay',
+		    				'vq']
 		  }, options);
-
+		  
+		  
+		  var  youtubeOpts =  ['showinfo','controls','rel','autoplay','vq'];
+		  
 		  /**
 		   * Replace the target with the returned player.
 		   */
@@ -66,6 +79,32 @@ SOFTWARE.
 		  }
 
 		  /*****************************************************************/
+		  
+		/**
+		* Figure out who the provider is from the URL.
+		* @param url string
+		* @return string
+		*/
+		provider = function(url)
+		{
+			
+			if(url.search(/soundcl/i)!=-1){
+				return 'soundcloud';
+			};
+			
+			if(url.search(/vimeo/i)!=-1){
+				return 'vimeo';
+			};
+			
+			if(url.search(/YouTu/i)!=-1){
+				return 'youtube';
+			};
+			
+			return 'unknown';
+			
+		}
+		
+		/*****************************************************************/
 		  
 		  /**
 			  * Get the current url.
@@ -95,8 +134,9 @@ SOFTWARE.
 		    
 		   url = getUrl(this);
 		   
-
-		    if (settings.nowrap == 'on') {
+		   p = provider(url);
+		   
+		   if (settings.nowrap == 'on') {
 		      url = url + '&nowrap=' + settings.nowrap;
 		    }
 
@@ -107,12 +147,23 @@ SOFTWARE.
 		    if (settings.maxheight != undefined) {
 		      url = url + '&maxheight=' + settings.maxheight;
 		    }
+		    
+		    
 
 		    endpoint = 'http://noembed.com/embed?url=' + url;
 
 		    var target = $(this);
-
-		    $.ajax({
+		    
+		    
+		    switch(p) {
+		    
+			    
+			    case 'youtube':
+			    loadPlayer(youTubePlayer(url), target);
+			    break;
+			    
+			    default: 
+			    $.ajax({
 		        method: 'GET',
 		        url: endpoint,
 		        dataType: 'json'
@@ -120,9 +171,80 @@ SOFTWARE.
 		      .done(function(data) {
 		        loadPlayer(data.html, target);
 		      });
+		      
+		   }
+
+		    
 		  });
 
 		  /*****************************************************************/
+		  
+		  
+		  /**
+			* Get YouTube video id from URL.
+			* @param url string
+			* @return string
+			*/
+			function youTubeId(url){
+				
+				var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+				if(videoid != null) {
+				return videoid[1];
+				} else {
+					return null;
+				}
+			}
+			
+		  
+		  /**
+			* Return a YouTube player.
+			* @param url string
+			* @return string
+			*/
+			function youTubePlayer(url){
+				
+				html = '';
+				youTubeQueryString();
+				
+				endpoint = 'https://www.youtube.com/embed/';
+				id = youTubeId(url);
+				
+				if(id) {
+					html+= '<iframe width="' + 
+					settings.maxwidth + '" height="' + 
+					settings.maxheight + '" src="' + 
+					endpoint + id + 
+					youTubeQueryString() + 
+					'" frameborder="0" allowfullscreen></iframe>';
+				}
+				
+				return html;
+			}
+			
+			/*****************************************************************/
+		  
+		  /**
+			  * Build a YouTube embed url query string.
+			  * @return string
+			  */
+		function youTubeQueryString(){
+			
+			str = '?';
+			
+			for(i=0;i<settings.youtubeOpts.length;i++) {
+				
+				opt = settings.youtubeOpts[i];
+				str += youtubeOpts[i] + '=' + settings.youtube[opt];
+				
+				if(i != (youtubeOpts.length - 1))
+				{
+					 str+= '&amp;'
+				} 
+			}
+		
+			return str;
+		}  
+			
 
 		}
 	
