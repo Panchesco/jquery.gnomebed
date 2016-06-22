@@ -16,8 +16,8 @@ A jQuery plugin for rendering embedded media via the Noembed gateway.
 | attr | Look for the URL in a tag attribute or wrapped text? | text | text, any attribute such as href, data-url, etc.
 | nowrap | Remove Noembed footer? | on | on, off
 | maxwidth | maximum width of returned player | 800 | any integer
-| maxheight | maximum height of returned player | 450 | any integer
-
+| maxheight | maximum height of returned player | 450 | any integer,
+| youtube | YouTube player options | {showinfo: 1, controls: 1, rel: 1, autoplay: 0} |  {showinfo: 1, controls: 1, rel: 1, autoplay: 0}
 
 #####Examples
 
