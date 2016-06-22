@@ -4,7 +4,7 @@ Author:         Richard Whitmer
 URL:            https://github.com/panchesco	
 Name:           Gnomebed	
 Description:    jQuery plugin for rendering embedded media via the Noembed gateway.
-Version:        1.1.0
+Version:        1.1.1
 
 The MIT License (MIT)
 
@@ -54,8 +54,6 @@ SOFTWARE.
 		    				'vq']
 		  }, options);
 		  
-		  
-		  var  youtubeOpts =  ['showinfo','controls','rel','autoplay','vq'];
 		  
 		  /**
 		   * Replace the target with the returned player.
@@ -234,9 +232,9 @@ SOFTWARE.
 			for(i=0;i<settings.youtubeOpts.length;i++) {
 				
 				opt = settings.youtubeOpts[i];
-				str += youtubeOpts[i] + '=' + settings.youtube[opt];
+				str += settings.youtubeOpts[i] + '=' + settings.youtube[opt];
 				
-				if(i != (youtubeOpts.length - 1))
+				if(i != (settings.youtubeOpts.length - 1))
 				{
 					 str+= '&amp;'
 				} 
