@@ -4,7 +4,7 @@ Author:         Richard Whitmer
 URL:            https://github.com/panchesco	
 Name:           Gnomebed	
 Description:    jQuery plugin for rendering embedded media via the Noembed gateway.
-Version:        1.1.1
+Version:        1.2.0
 
 The MIT License (MIT)
 
@@ -31,8 +31,35 @@ SOFTWARE.
 
 
 	(function(jQuery){
+		
+			var noembedPlayer = {
+									url: '',
+									endpoint: 'http://noembed.com/embed?url=',
+									maxwidth: '',
+									maxheight: '',
+									target: '',
+									player: function(){
+										
+										$.ajax({
+											method: 'GET',
+											url: this.endpoint + this.url,
+											dataType: 'json',
+											target: this.target
+											})
+											.done(function(data){
+												$(this.target).html(data.html);
+											})
+									}
+								}
+		  
+
+		  /*****************************************************************/
+		
+
 
 		$.fn.gnomebed = function(options) {
+			
+		
 		
 			var settings = $.extend({
 
@@ -41,19 +68,11 @@ SOFTWARE.
 		    attr: 'text',
 		    nowrap: 'on',
 		    maxwidth: 800,
-		    maxheight: 450,
-		    youtube: {	showinfo: 1,
-			    		controls: 1,
-			    		rel: 1,
-			    		autoplay: 0,
-		    },
-		    youtubeOpts: ['showinfo',
-		    				'controls',
-		    				'rel',
-		    				'autoplay',
-		    				'vq']
+		    maxheight: 450
 		  }, options);
 		  
+		  
+		  /*****************************************************************/		  
 		  
 		  /**
 		   * Replace the target with the returned player.
@@ -124,9 +143,11 @@ SOFTWARE.
 		    }
 
 		}
+		
+		/*****************************************************************/
 
 		  /**
-		   * Request embed from noembed gateway.
+		   * Build url and request player.
 		   */
 		  $(this).each(function() {
 		    
@@ -146,36 +167,40 @@ SOFTWARE.
 		      url = url + '&maxheight=' + settings.maxheight;
 		    }
 		    
-		    
-
-		    endpoint = 'http://noembed.com/embed?url=' + url;
-
 		    var target = $(this);
 		    
-		    
 		    switch(p) {
-		    
-			    
+
 			    case 'youtube':
-			    loadPlayer(youTubePlayer(url), target);
+			    
+			    if(settings.youtube)
+			    {
+				    loadPlayer(youTubePlayer(url), target);
+			    } else {
+
+				    noembed = noembedPlayer;
+					noembed.url = url;
+					noembed.target = target;
+					noembed.player();
+			    }
+
 			    break;
 			    
 			    default: 
-			    $.ajax({
-		        method: 'GET',
-		        url: endpoint,
-		        dataType: 'json'
-		      })
-		      .done(function(data) {
-		        loadPlayer(data.html, target);
-		      });
-		      
-		   }
 
+				noembed = noembedPlayer;
+				noembed.url = url;
+				noembed.target = target;
+				noembed.player();
+
+		   }
 		    
 		  });
+		  
 
 		  /*****************************************************************/
+		  
+
 		  
 		  
 		  /**
@@ -193,6 +218,7 @@ SOFTWARE.
 				}
 			}
 			
+		  /*****************************************************************/
 		  
 		  /**
 			* Return a YouTube player.
@@ -227,14 +253,20 @@ SOFTWARE.
 			  */
 		function youTubeQueryString(){
 			
+			var youtubeOpts = ['showinfo',
+		    				'controls',
+		    				'rel',
+		    				'autoplay',
+		    				'vq'];
+			
 			str = '?';
 			
-			for(i=0;i<settings.youtubeOpts.length;i++) {
+			for(i=0;i<youtubeOpts.length;i++) {
 				
-				opt = settings.youtubeOpts[i];
-				str += settings.youtubeOpts[i] + '=' + settings.youtube[opt];
+				opt = youtubeOpts[i];
+				str += youtubeOpts[i] + '=' + settings.youtube[opt];
 				
-				if(i != (settings.youtubeOpts.length - 1))
+				if(i != (youtubeOpts.length - 1))
 				{
 					 str+= '&amp;'
 				} 
@@ -242,6 +274,8 @@ SOFTWARE.
 		
 			return str;
 		}  
+		
+		/*****************************************************************/
 			
 
 		}

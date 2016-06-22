@@ -17,7 +17,7 @@ A jQuery plugin for rendering embedded media via the Noembed gateway.
 | nowrap | Remove Noembed footer? | on | on, off
 | maxwidth | maximum width of returned player | 800 | any integer
 | maxheight | maximum height of returned player | 450 | any integer,
-| youtube | YouTube player options | {showinfo: 1, controls: 1, rel: 1, autoplay: 0} |  {showinfo: 1, controls: 1, rel: 1, autoplay: 0}
+| youtube | Add YouTube player options for a customized YouTube player | {showinfo: 1, controls: 1, rel: 1, autoplay: 0} |  {showinfo: 1, controls: 1, rel: 1, autoplay: 0}
 
 #####Examples
 
@@ -55,4 +55,4 @@ Use a tag attribute to pass the URL:
 
 ####Notes
 
-So far, I've only tested YouTube, Vimeo, and SoundCloud URLs with this repo. Limits to the maxwidth and maxheight options will vary by provider. See [noembed.com](http://noembed.com) for providers the Noembed project currently supports.
+So far, only tested YouTube, Vimeo, and SoundCloud URLs with this repo. Limits to the maxwidth and maxheight options will vary by provider. See [noembed.com](http://noembed.com) for providers the Noembed project currently supports.
