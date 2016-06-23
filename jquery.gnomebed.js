@@ -4,7 +4,7 @@ Author:         Richard Whitmer
 URL:            https://github.com/panchesco	
 Name:           Gnomebed	
 Description:    jQuery plugin for rendering embedded media via the Noembed gateway.
-Version:        1.2.0
+Version:        1.3.0
 
 The MIT License (MIT)
 
@@ -151,21 +151,36 @@ SOFTWARE.
 		   */
 		  $(this).each(function() {
 		    
+		   noembed = function(url,target) {
+			   
+			   if (settings.nowrap == 'on') {
+					url = url + '&nowrap=' + settings.nowrap;
+		    	}
+
+				if (settings.maxwidth != undefined) {
+					url = url + '&maxwidth=' + settings.maxwidth;
+		    	}
+
+				if (settings.maxheight != undefined) {
+					url = url + '&maxheight=' + settings.maxheight;
+		    	}
+		    	
+		    	noembed = noembedPlayer;
+				noembed.url = url;
+				noembed.target = target;
+				noembed.player();
+			   
+		   }
+		   
+		   
+		   
+		   
+		   
 		   url = getUrl(this);
 		   
 		   p = provider(url);
 		   
-		   if (settings.nowrap == 'on') {
-		      url = url + '&nowrap=' + settings.nowrap;
-		    }
-
-		    if (settings.maxwidth != undefined) {
-		      url = url + '&maxwidth=' + settings.maxwidth;
-		    }
-
-		    if (settings.maxheight != undefined) {
-		      url = url + '&maxheight=' + settings.maxheight;
-		    }
+		   
 		    
 		    var target = $(this);
 		    
@@ -178,20 +193,25 @@ SOFTWARE.
 				    loadPlayer(youTubePlayer(url), target);
 			    } else {
 
-				    noembed = noembedPlayer;
-					noembed.url = url;
-					noembed.target = target;
-					noembed.player();
+				    noembed(url,target);
 			    }
 
 			    break;
 			    
-			    default: 
+			    case 'vimeo':
+			    	if(settings.vimeo)
+					{
+				    	loadPlayer(vimeoPlayer(url), target);
+			    	} else {
 
-				noembed = noembedPlayer;
-				noembed.url = url;
-				noembed.target = target;
-				noembed.player();
+				    noembed(url,target);
+			    }
+			    
+			    break;
+			    
+			    default: 
+			    
+			    noembed(url,target);
 
 		   }
 		    
@@ -215,7 +235,7 @@ SOFTWARE.
 				return videoid[1];
 				} else {
 					return null;
-				}
+}
 			}
 			
 		  /*****************************************************************/
@@ -253,6 +273,7 @@ SOFTWARE.
 			  */
 		function youTubeQueryString(){
 			
+			
 			var youtubeOpts = ['showinfo',
 		    				'controls',
 		    				'rel',
@@ -267,6 +288,79 @@ SOFTWARE.
 				str += youtubeOpts[i] + '=' + settings.youtube[opt];
 				
 				if(i != (youtubeOpts.length - 1))
+				{
+					 str+= '&amp;'
+				} 
+			}
+		
+			return str;
+		}  
+		
+		/*****************************************************************/
+		
+		
+			  /**
+			* Get Vimeo video id from URL.
+			* @param url string
+			* @return string
+			*/
+			function vimeoId(url){
+				return url.replace(/[^0-9]+/g, ''); 
+			}
+			
+		  /*****************************************************************/
+		  
+		  /**
+			* Return a YouTube player.
+			* @param url string
+			* @return string
+			*/
+			function vimeoPlayer(url){
+				
+				html = '';
+				vimeoQueryString();
+				
+				endpoint = 'https://player.vimeo.com/video/';
+				id = vimeoId(url);
+				
+				if(id) {
+					html+= '<iframe width="' + 
+					settings.maxwidth + '" height="' + 
+					settings.maxheight + '" src="' + 
+					endpoint + id + 
+					vimeoQueryString() + 
+					'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+				}
+				
+				return html;
+			}
+			
+			/*****************************************************************/
+		  
+		  /**
+			  * Build a YouTube embed url query string.
+			  * @return string
+			  */
+		function vimeoQueryString(){
+			
+			var vimeoOpts = ['autopause',
+		    				'autoplay',
+		    				'badge',
+		    				'byline',
+		    				'color',
+		    				'loop',
+		    				'player_id',
+		    				'portrait',
+		    				'title'];
+			
+			str = '?';
+			
+			for(i=0;i<vimeoOpts.length;i++) {
+				
+				opt = vimeoOpts[i];
+				str += vimeoOpts[i] + '=' + settings.vimeo[opt];
+				
+				if(i != (vimeoOpts.length - 1))
 				{
 					 str+= '&amp;'
 				} 
