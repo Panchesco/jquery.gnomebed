@@ -18,7 +18,7 @@ A jQuery plugin for rendering embedded media via the Noembed gateway.
 | maxwidth | maximum width of returned player | 800 | any integer
 | maxheight | maximum height of returned player | 450 | any integer,
 | youtube | Add YouTube player options for a customized YouTube player | {showinfo: 1, controls: 1, rel: 1, autoplay: 0} |  {showinfo: 1, controls: 1, rel: 1, autoplay: 0}
-| vimeo | Add Vimeo player options for a customized Vimeo player | {autopause: 1, autoplay: 1, badge: 1, byline: 1, color: 'ffcc00', loop: 0} |  
+| vimeo | Add Vimeo player options for a customized Vimeo player | {autopause: 1, autoplay: 1, badge: 1, byline: 1, color: 'ffcc00', loop: 0, portrait: 1, title: 1} |  
 
 #####Examples
 

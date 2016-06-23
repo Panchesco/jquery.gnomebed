@@ -171,32 +171,22 @@ SOFTWARE.
 				noembed.player();
 			   
 		   }
-		   
-		   
-		   
-		   
-		   
+
 		   url = getUrl(this);
-		   
 		   p = provider(url);
-		   
-		   
-		    
-		    var target = $(this);
+		   var target = $(this);
 		    
 		    switch(p) {
 
 			    case 'youtube':
 			    
-			    if(settings.youtube)
-			    {
+			    if(settings.youtube) {
 				    loadPlayer(youTubePlayer(url), target);
 			    } else {
 
 				    noembed(url,target);
 			    }
-
-			    break;
+				break;
 			    
 			    case 'vimeo':
 			    	if(settings.vimeo)
