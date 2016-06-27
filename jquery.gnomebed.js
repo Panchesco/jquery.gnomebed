@@ -4,7 +4,7 @@ Author:         Richard Whitmer
 URL:            https://github.com/panchesco	
 Name:           Gnomebed	
 Description:    jQuery plugin for rendering embedded media via the Noembed gateway.
-Version:        1.3.1
+Version:        1.3.2
 
 The MIT License (MIT)
 
